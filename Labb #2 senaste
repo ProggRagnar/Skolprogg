@@ -1,0 +1,72 @@
+;Problem 1
+
+(define (atom? n)
+  (cond
+    ((null? n) #f)
+    ((list? n) #f)
+    ((pair? n) #f)
+    (else #t)))
+      
+
+;Problem 2
+
+(define (count-list lst)
+  (if (null? lst)
+      0
+      (+ 1 (count-list(cdr lst)))))
+
+;Problem 3
+
+(define (keep-if pred lat)
+  (cond
+    ((null? lat) '())
+    ((pred (car lat))
+      (cons (car lat) (keep-if pred (cdr lat))))
+     (else (keep-if pred (cdr lat)))))
+
+;Problem 4
+
+(define (first-n numb-of-ele lst)
+  (cond
+    ((= numb-of-ele 0) '())
+    ((<= (count-list lst) numb-of-ele) lst)
+  (else (cons (car lst) (first-n (- numb-of-ele 1) (cdr lst))))))
+
+;Problem 5
+
+(define (range from to step)
+  (if (> from to)
+      '()
+      (cons from (range (+ from step) to step))))
+
+;Problem 6
+
+;Iterative
+
+(define (reverse-order lst)
+  (define (reverse-iter lst fantasyswing)
+    (if (null? lst)
+        fantasyswing
+        (reverse-iter (cdr lst) (cons (car lst) fantasyswing))))
+  (reverse-iter lst '()))
+
+;Linear Recursive
+
+(define (reverse-order-2 lst)
+  (define (my-append lst1 lst2)   
+    (cons lst1 lst2))
+  (if(null? lst)
+     lst
+     (my-append (reverse-order-2 (cdr lst)) (car lst))))
+
+(define (my-append lst1 lst2)   
+    (append (lst1 lst2)))
+;Problem 7
+
+(define (map-to-each funktion lst)
+  (define funktion
+    (lambda (x)
+  (if (null? lst)
+      '()
+      (cons (funktion (car lst)) (map-to-each funktion (cdr lst)))))
+      
