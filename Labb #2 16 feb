@@ -1,0 +1,136 @@
+(load "quicksort-skel.scm")
+
+;Problem 1
+
+(define (atom? n)
+  (if
+   (or (null? n) (pair? n) )
+       #f
+       #t))
+      
+
+;Problem 2
+
+(define (count-list lst)
+  (if (null? lst)
+      0
+      (+ 1 (count-list(cdr lst)))))
+
+;Problem 3
+
+(define (keep-if pred lat)
+  (cond
+    ((null? lat) '())
+    ((pred (car lat))
+      (cons (car lat) (keep-if pred (cdr lat))))
+     (else (keep-if pred (cdr lat)))))
+
+;Problem 4
+
+(define (first-n numb-of-ele lst)
+  (cond
+    ((= numb-of-ele 0) '())
+    ((<= (count-list lst) numb-of-ele) lst)
+  (else (cons (car lst) (first-n (- numb-of-ele 1) (cdr lst))))))
+
+;Problem 5
+
+(define (range from to step)
+  (if (> from to)
+      '()
+      (cons from (range (+ from step) to step))))
+
+;Problem 6
+
+;Iterative
+
+(define (reverse-order lst)
+  (define (reverse-iter lst fantasyswing)
+    (if (null? lst)
+        fantasyswing
+        (reverse-iter (cdr lst) (cons (car lst) fantasyswing))))
+  (reverse-iter lst '()))
+
+;Linear Recursive
+
+(define (reverse-order-2 lst)
+  (if (null? lst)
+      lst
+     (append (reverse-order-2 (cdr lst)) (cons (car lst) ()))))
+
+(define (my-append lst1 lst2)
+    (append (lst1 lst2)))
+;Problem 7
+
+
+(define (map-to-each funktion lst)
+  (if (null? lst)
+      '()
+      (cons (funktion (car lst)) (map-to-each funktion (cdr lst)))))
+
+;Problem 8
+
+(define (count-all lst)
+  (cond
+    ((null? lst) 0)
+    ((list? (car lst)) (+ (count-all (car lst)) (count-all (cdr lst))))
+      (else (+ 1 (count-all(cdr lst))))))
+
+(define (keep-if-all pred lat)
+  (cond
+    ((if (atom? lat) '()
+    ((list? (car lat)) (keep-if-all pred (car lat)))))
+    ((pred (car lat))
+     (cons (car lat) (keep-if-all pred (cdr lat))))
+    (else (keep-if-all pred (cdr lat)))))
+
+;Problem 9
+
+;Funkar okej så länge det inte är mer än 1 lista inuti första listan.
+
+  
+(define (list-equal? lst1 lst2)
+  (cond
+    ((and (null? lst1) (null? lst2)) #t)
+    ((eq? lst1 lst2) #t)
+    ((and (list? (car lst1)) (list? (car lst2))) (if (= (car (car lst1)) (car (car lst2)))
+                                                    (list-equal? (cdr (car lst1)) (cdr (car lst2))) #f))
+    ((list? (car lst1)) #f)
+    ((list? (car lst2)) #f)
+    ((= (car lst1) (car lst2)) (list-equal? (cdr lst1) (cdr lst2)))
+    (else #f)))
+
+;Problem 10
+
+
+(define (occurs*? val lst)
+  (if (null? lst)
+      #f
+  (cond
+    ((atom? lst) (eq? val lst))
+    (else (or
+           (occurs*? val (car lst))
+           (occurs*? val (cdr lst)))))))
+
+
+;Problem 11
+
+(define (subst-all gammal ny lst)
+  (if (null? lst)
+      '()
+      (cons (if (eq? gammal (car lst))
+                ny
+                (car lst))
+            (subst-all gammal ny (cdr lst)))))
+
+
+;Problem 12
+
+(define (partition pivot lon)
+  (define (phelper pivot lon less-or-equal greater)
+    (cond
+      ((null? lon) (cons less-or-equal greater))
+      (( <= (car lon) pivot) (phelper pivot (cdr lon) (cons (car lon) less-or-equal) greater))
+      (else (phelper pivot (cdr lon) less-or-equal (cons (car lon) greater)))))
+  (phelper pivot lon '() '()))
+        
