@@ -1,4 +1,3 @@
-
 ;Problem 1
 
 (define foo
@@ -7,11 +6,10 @@
 (define (foobar)
   (* 1 2 3 4))
 
-;foo - returnerar 24, foo blir en konstant.
+;foo - binder 24 till foo
 ;foobar - säger #<procedure:foobar>. Dvs talar om att foobar är en procedur
 ;(foo) - Försöker köra en procedur av namnet foo men får en konstant.
 ;(foobar) - 24. (foobar) är en procedur. När den körs fås värdet 24.
-
 
 ;Problem 2
 
