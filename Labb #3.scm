@@ -21,3 +21,17 @@
             (set! list (cdr list))
             (loop))))
     (loop)))
+
+;Problem 3
+
+(define count-calls
+  (let ((count 0))
+    (lambda lst
+      (cond
+        ((null? lst) (begin
+                       (set! count (+ count 1))
+                       count))
+        ((eq? (car lst) 'how-many-calls) count)
+        ((eq? (car lst) 'reset-count) (set! count 0) count)))))
+                                
+              
