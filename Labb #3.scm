@@ -54,3 +54,13 @@
 ;Problem 6 - Se bifogat blad
 
 ;Problem 7
+
+(define (convert-loop fn)
+  (display "Give me a number!")
+  (let ((user-input (read)))
+    (cond
+      ((eq? user-input 'quit) (display "Bye bye!"))
+      ((not (number? user-input)) (display user-input) (display " is not a number. Try again!"))                   
+      (else (display user-input) (display "--->") (display (fn user-input))))))
+
+;Problem 8
