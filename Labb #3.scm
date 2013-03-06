@@ -64,3 +64,41 @@
       (else (display user-input) (display "--->") (display (fn user-input))))))
 
 ;Problem 8
+
+(define (install-my-utils)
+  (define (double num) (* 2 num))
+  (define (triple num) (* 3 num))
+  (begin
+    (put 'doubling 'my-utils double)
+    (put 'tripling 'my-utils triple)
+    (display "ok")))
+                         
+
+(define (install-your-utils)
+  (define (double num) (+ num num))
+  (begin
+    (put 'doubling 'your-utils double)
+    (put 'tripling 'your-utils (lambda (num) (+ num num num)))
+    (display "ok")))
+
+(define (double num)
+  ((get 'doubling 'your-utils) num))
+
+(define (triple num)
+  ((get 'tripling 'your-utils) num))
+
+;Problem 9
+
+(define (interaction-loop)
+  (display ">")
+  (let ((user-input (enter-new-command!)))
+  (cond
+    ((eq? (get-command-name) 'quit) (display "Bye bye!"))
+    ((get 'lab-3.9 (get-command-name)) (and (apply (get 'lab-3.9 (get-command-name)) 
+                                                   (get-command-arguments)) (interaction-loop)))
+    (else (display "Unknown command:  ") (display (get-command-name))))))
+
+(define (add-command! name funk)
+  (put 'lab-3.9 name funk)
+  'ok)
+  
