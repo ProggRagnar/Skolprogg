@@ -94,8 +94,8 @@
   (let ((user-input (enter-new-command!)))
   (cond
     ((eq? (get-command-name) 'quit) (display "Bye bye!"))
-    ((get 'lab-3.9 (get-command-name)) (and (apply (get 'lab-3.9 (get-command-name)) 
-                                                   (get-command-arguments)) (interaction-loop)))
+    ((get 'lab-3.9 (get-command-name)) (apply (get 'lab-3.9 (get-command-name)) 
+                                                   (get-command-arguments)))
     (else (display "Unknown command:  ") (display (get-command-name))))))
 
 (define (add-command! name funk)
