@@ -29,9 +29,9 @@
 ;Problem 4
 
 (define (first-n numb-of-ele lst)
-  (cond 
+  (cond
     ((= numb-of-ele 0)'())
-    ((null? lst) '()) 
+    ((null? lst) '())
     (else (cons (car lst) (first-n (- numb-of-ele 1) (cdr lst))))))
 
 ;Problem 5
@@ -80,16 +80,12 @@
       (else (+ 1 (count-all(cdr lst))))))
 
 (define (keep-if-all pred lst)
-  (define (keephelper pred lst1 lst2)
-    (cond
-      ((null? lst1) '())
-      ((null? lst2) '())
-      ((list? (car lst1)) (keephelper pred (car lst1) lst2))
-      ((pred (car lst1))
-       (cons (car lst1) (keephelper pred (cdr lst1)  lst2)))
-      (else (keephelper pred (cdr lst2) (cdr lst2)))))
-  (keephelper pred lst lst))
-
+  (cond
+    ((null? lst) '())
+    ((list? (car lst)) (cons (keep-if-all pred (car lst)) (keep-if-all pred (cdr lst))))
+    ((pred (car lst)) (cons (car lst) (keep-if-all pred (cdr lst))))
+    (else (keep-if-all pred (cdr lst)))))
+  
 ;Problem 9
   
 (define (list-equal? lst1 lst2)
@@ -116,12 +112,11 @@
 ;Problem 11
 
 (define (subst-all gammal ny lst)
-  (if (null? lst)
-      '()
-      (cons (if (eq? gammal (car lst))
-                ny
-                (car lst))
-            (subst-all gammal ny (cdr lst)))))
+  (cond
+    ((null? lst) '())
+    ((list? (car lst)) (cons (subst-all gammal ny (car lst)) (subst-all gammal ny (cdr lst))))
+    ((eq? gammal (car lst)) (cons ny (subst-all gammal ny (cdr lst))))
+    (else (cons (car lst) (subst-all gammal ny (cdr lst))))))
 
 ;Problem 12
 
@@ -186,6 +181,12 @@
 
 (define (get-count field testcase database)
   (count-list (get-all field testcase database)))
+
+
+(define (count-list lst)
+  (if (null? lst)
+      0
+      (+ 1 (count-list(cdr lst)))))
 
 (define (count-list lst)
   (if (null? lst)
